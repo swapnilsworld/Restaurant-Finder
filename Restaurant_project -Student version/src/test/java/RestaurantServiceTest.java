@@ -10,12 +10,22 @@ class RestaurantServiceTest {
     RestaurantService service = new RestaurantService();
     Restaurant restaurant;
     //REFACTOR ALL THE REPEATED LINES OF CODE
+    LocalTime openingTime = LocalTime.parse("10:30:00");
+    LocalTime closingTime = LocalTime.parse("22:00:00");
 
 
     //>>>>>>>>>>>>>>>>>>>>>>SEARCHING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     @Test
     public void searching_for_existing_restaurant_should_return_expected_restaurant_object() throws restaurantNotFoundException {
         //WRITE UNIT TEST CASE HERE
+
+        restaurant = service.addRestaurant("A cafe","Pune",openingTime,closingTime);
+        restaurant = service.addRestaurant("B cafe","Mumbai",openingTime,closingTime);
+        restaurant = service.addRestaurant("C cafe","Banglore",openingTime,closingTime);
+        restaurant.addToMenu("Sweet corn soup",100);
+        restaurant.addToMenu("Vegetable lasagne", 200);
+
+        Assertions.assertEquals(service.findRestaurantByName("A cafe").getName(),"A cafe");
     }
 
     //You may watch the video by Muthukumaran on how to write exceptions in Course 3: Testing and Version control: Optional content
