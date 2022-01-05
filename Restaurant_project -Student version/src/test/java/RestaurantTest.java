@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,4 +77,28 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    @Test
+    public void order_value_should_get_cumulative_total_when_collection_of_items_selected(){
+        getTestRestaurant();
+        List<String> selectedMenu = new ArrayList<String>();
+        //Test1
+        selectedMenu.add(restaurant.getMenu().get(0).getName());
+        selectedMenu.add(restaurant.getMenu().get(2).getName());
+        int totalOrderValue = restaurant.getOrderValue(selectedMenu);
+        Assertions.assertEquals(totalOrderValue,50);
+
+        // Test2
+        selectedMenu.add(restaurant.getMenu().get(1).getName());
+        totalOrderValue = restaurant.getOrderValue(selectedMenu);
+        Assertions.assertEquals(totalOrderValue,72);
+    }
+
+    private void getTestRestaurant() {
+        restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+        restaurant.addToMenu("poha",30);
+        restaurant.addToMenu("kachori", 22);
+        restaurant.addToMenu("samosa", 20);
+        restaurant.addToMenu("wada pav", 25);
+    }
 }
