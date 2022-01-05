@@ -19,19 +19,28 @@ class RestaurantServiceTest {
     public void searching_for_existing_restaurant_should_return_expected_restaurant_object() throws restaurantNotFoundException {
         //WRITE UNIT TEST CASE HERE
 
-        restaurant = service.addRestaurant("A cafe","Pune",openingTime,closingTime);
-        restaurant = service.addRestaurant("B cafe","Mumbai",openingTime,closingTime);
-        restaurant = service.addRestaurant("C cafe","Banglore",openingTime,closingTime);
-        restaurant.addToMenu("Sweet corn soup",100);
-        restaurant.addToMenu("Vegetable lasagne", 200);
+        createRestaurantList();
+//        restaurant.addToMenu("Sweet corn soup",100);
+//        restaurant.addToMenu("Vegetable lasagne", 200);
 
         Assertions.assertEquals(service.findRestaurantByName("A cafe").getName(),"A cafe");
+    }
+
+    private void createRestaurantList() {
+        restaurant = service.addRestaurant("A cafe", "Pune", openingTime, closingTime);
+        restaurant = service.addRestaurant("B cafe", "Mumbai", openingTime, closingTime);
+        restaurant = service.addRestaurant("C cafe", "Banglore", openingTime, closingTime);
     }
 
     //You may watch the video by Muthukumaran on how to write exceptions in Course 3: Testing and Version control: Optional content
     @Test
     public void searching_for_non_existing_restaurant_should_throw_exception() throws restaurantNotFoundException {
         //WRITE UNIT TEST CASE HERE
+        createRestaurantList();
+
+        assertThrows(restaurantNotFoundException.class,()->{
+            service.findRestaurantByName("Swapnils");
+        });
     }
     //<<<<<<<<<<<<<<<<<<<<SEARCHING>>>>>>>>>>>>>>>>>>>>>>>>>>
 
